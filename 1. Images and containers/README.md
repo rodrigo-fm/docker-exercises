@@ -10,26 +10,38 @@ Inside the respective project's folder, execute the command:
 
 **2 - Launch a container for each created image, making sure, that the app inside the container works correctly and is usable.**
 
-NODE APP: ``docker run --rm -d -p 3000:3000 [image_id]``
+NODE APP: ``docker run -d -p 3000:3000 [image_id or tag]``
 
-PYTHON APP: ``docker run --rm -it [image_id]``
+PYTHON APP: ``docker run -it [image_id or tag]``
 
 **3 - Re-create both containers and assign names to both containers.Use these names to stop and restart both containers.**
 
-NODE APP: [ADD ANSWER HERE]
+We use the ``--name`` tag to give a container a name.
 
-PYTHON APP: [ADD ANSWER HERE]
+NODE APP: ``docker run --name node_container -d -p 3000:3000 [image_id or tag]``
+
+PYTHON APP: ``docker run -it --name python_container [image_id or tag]``
 
 **4 - Clean up (remove) all stopped (and running) containers, clean up all created images.**
 
-The --rm flag can be used to remove a container once it is stopped. Otherwise each container must be removed using ``docker rm [container_name] [container_name2]`` and so on.
+Cleaning up the containers: All the containers can be removed using the combination of two commands:
+
+``docker stop $(docker ps -aq)``
+
+``docker rm $(docker ps -aq)``
+
+The ``docker ps -aq`` will return only the ids of all the containers. Otherwise you can specify which container you want to remove passing it's name to the ``docker rm`` command.
+
+Cleaning up all the images: just run ``docker image prune -a``
 
 **5 - Re-build the images - this time with names and tags assigned to them.**
 
-NODE APP: [ADD ANSWER HERE]
+We use the option ``-t`` to assing a name and a tag (optionally) to the new created image.
 
-PYTHON APP: [ADD ANSWER HERE]
+NODE APP: ``docker build -t node-app:lastest``
+
+PYTHON APP: ``docker build -t python-app:lastest``
 
 **6 - Run new containers based on the re-built images, ensuring that the containers are removed automatically when stopped.**
 
-As stated on the question 4, the ``--rm`` flag can be used to remove a container once it is stopped.
+The ``--rm`` option can be used on the ``docker run`` command to remove a container once it is stopped.
